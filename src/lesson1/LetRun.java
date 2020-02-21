@@ -1,10 +1,10 @@
 package lesson1;
 
-public class LetRoad {
+public class LetRun {
 
     public final int width;
 
-    public LetRoad(int width) {
+    public LetRun(int width) {
         this.width = width;
     }
 

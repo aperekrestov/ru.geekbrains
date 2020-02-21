@@ -1,13 +1,13 @@
 package lesson1;
 
-public class Human implements Member {
+public class Robot implements Member {
 
-    public static final int MAX_RUN = 1000;
-    public static final int MAX_JUMP = 50;
+    public final int MAX_RUN = 10000;
+    public final int MAX_JUMP = 1000;
     public String name;
 
-    public Human(String name) {
-        this.name = name + " from Africa";
+    public Robot(String name) {
+        this.name = name + " Noob Saibot";
     }
 
     @Override

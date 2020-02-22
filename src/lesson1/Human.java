@@ -4,12 +4,11 @@ import java.util.Random;
 
 public class Human implements Member {
 
-    public static final int MAX_RUN = 1000;
+    public static final int MAX_RUN = 50000;
     public static final int MAX_JUMP = 50;
 
     private int personalRunRecord;
     private int personalJumpRecord;
-
     public String name;
 
     public Human(String name) {

@@ -4,12 +4,11 @@ import java.util.Random;
 
 public class Robot implements Member {
 
-    public final int MAX_RUN = 10000;
-    public final int MAX_JUMP = 1000;
+    public final int MAX_RUN = 50000;
+    public final int MAX_JUMP = 50;
 
     private int personalRunRecord;
     private int personalJumpRecord;
-
     public String name;
 
     public Robot(String name) {

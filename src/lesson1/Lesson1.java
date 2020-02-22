@@ -3,9 +3,11 @@ package lesson1;
 import java.util.ArrayList;
 
 public class Lesson1 {
-    private static final int MEMBERS_NUM = 15;
-    private static final int BARRIERS_NUM = 1;
+    private static final int MEMBERS_NUM = 3;
+    private static final int BARRIERS_NUM = 2;
     private static final int MAX_BARRIER_HEIGHT = 50;
+    private static final int MAX_BARRIER_WIDTH = 50000;
+    private static ArrayList membersWhoFinished = new ArrayList();
 
     public static void main(String[] args) {
 
@@ -21,26 +23,37 @@ public class Lesson1 {
             }
         }
 
-        LetJump[] walls = new LetJump[BARRIERS_NUM];
-        for (int i = 0; i < walls.length; i++) {
-            LetJump newWall = new LetJump(MAX_BARRIER_HEIGHT);
-            walls[i] = newWall;
+        Barrier[] barriers = new Barrier[BARRIERS_NUM];
+
+        for (int i = 0; i < barriers.length; i++) {
+            if (i % 2 == 0) {
+                Barrier newWall = new LetJump("Wall " + i, MAX_BARRIER_HEIGHT);
+                barriers[i] = newWall;
+            } else {
+                Barrier newRoad = new LetRun("Road " + i, MAX_BARRIER_WIDTH);
+                barriers[i] = newRoad;
+            }
         }
 
-        for (int i = 0; i < walls.length; i++) {
-            System.out.print("\n" + "Wall " + i + " start! ");
-            System.out.println("The walls height is " + walls[i].getHeight() + " \n");
+        for (int i = 0; i < barriers.length; i++) {
+
+            System.out.print("\n" + barriers[i].getName() + " start! ");
+            System.out.println("Limit is " + barriers[i].getLimit() + " \n");
 
             for (int j = 0; j < members.size(); j++) {
 
-                if (walls[i].doJump(members.get(j)) == false) {
+                // TODO: 22.02.2020 fix log after remove member
+                if (!barriers[i].doIt(members.get(j))) {
+                    System.out.println("members.remove(" + j + ")");
                     members.remove(j);
-                    System.out.println("!! loose " + j);
+                } else {
+                    membersWhoFinished.add(members.get(j));
                 }
                 System.out.println();
             }
         }
 
         System.out.println("\n-Finished " + members.size() + " members");
+        System.out.println(membersWhoFinished.size());
     }
 }

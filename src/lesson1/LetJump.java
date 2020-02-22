@@ -2,24 +2,33 @@ package lesson1;
 
 import java.util.Random;
 
-public class LetJump {
+public class LetJump implements Barrier {
 
-    private final int height;
+    private final int limit;
+    private String name;
 
-    public LetJump(int MAX_HEIGHT) {
+    public LetJump(String name, int MAX_INT) {
+        this.name = name;
         Random random = new Random();
-        this.height = random.nextInt(MAX_HEIGHT);
+        this.limit = random.nextInt(MAX_INT);
     }
 
-    public boolean doJump(Member member) {
-        int h = member.jump();
-        boolean memberDoIt = h >= height;
+    @Override
+    public int getLimit(){
+        return limit;
+    }
+
+    @Override
+    public boolean doIt(Member member) {
+        int i = member.jump();
+        boolean memberDoIt = i >= limit;
 
         System.out.println(memberDoIt + " ");
         return memberDoIt;
     }
 
-    public int getHeight(){
-        return height;
+    @Override
+    public String getName() {
+        return name;
     }
 }

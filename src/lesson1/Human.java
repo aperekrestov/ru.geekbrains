@@ -13,6 +13,7 @@ public class Human implements Member {
 
     public Human(String name) {
         this.name = name + " from Africa";
+        System.out.println(name);
 
         Random random = new Random();
         personalRunRecord = random.nextInt(MAX_RUN);

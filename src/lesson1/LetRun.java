@@ -1,18 +1,34 @@
 package lesson1;
 
-public class LetRun {
+import java.util.Random;
 
-    public final int width;
+public class LetRun implements Barrier{
 
-    public LetRun(int width) {
-        this.width = width;
+    private final int limit;
+    private String name;
+
+    public LetRun(String name, int MAX_INT) {
+        this.name = name;
+        Random random = new Random();
+        this.limit = random.nextInt(MAX_INT);
     }
 
-    public boolean doRun(Member member){
-        int w = member.run();
-        boolean memberDoIt = w >= width;
+    @Override
+    public int getLimit(){
+        return limit;
+    }
 
-        System.out.println(memberDoIt);
+    @Override
+    public boolean doIt(Member member){
+        int w = member.run();
+        boolean memberDoIt = w >= limit;
+
+        System.out.println(memberDoIt + " ");
         return memberDoIt;
+    }
+
+    @Override
+    public String getName() {
+        return name;
     }
 }

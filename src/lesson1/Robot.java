@@ -4,8 +4,8 @@ import java.util.Random;
 
 public class Robot implements Member {
 
-    public final int MAX_RUN = 50000;
-    public final int MAX_JUMP = 50;
+    public static final int MAX_RUN = 50000;
+    public static final int MAX_JUMP = 50;
 
     private int personalRunRecord;
     private int personalJumpRecord;
@@ -13,6 +13,7 @@ public class Robot implements Member {
 
     public Robot(String name) {
         this.name = name + " Noob Saibot";
+        System.out.println(name);
 
         Random random = new Random();
         personalRunRecord = random.nextInt(MAX_RUN);

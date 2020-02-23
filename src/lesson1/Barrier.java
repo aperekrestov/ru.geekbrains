@@ -1,10 +1,10 @@
 package lesson1;
 
 public interface Barrier {
-    String name = "Препятствие";
+    String name = "Barrier";
     int limit = 0;
 
     int getLimit();
-    boolean doIt(Member member);
     String getName();
+    boolean doIt(Member member);
 }

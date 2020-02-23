@@ -23,7 +23,7 @@ public class LetRun implements Barrier{
         int w = member.run();
         boolean memberDoIt = w >= limit;
 
-        System.out.println(memberDoIt + " ");
+        System.out.println(" - " + memberDoIt + " ");
         return memberDoIt;
     }
 

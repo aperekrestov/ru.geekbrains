@@ -14,7 +14,7 @@ public class LetJump implements Barrier {
     }
 
     @Override
-    public int getLimit(){
+    public int getLimit() {
         return limit;
     }
 
@@ -23,7 +23,7 @@ public class LetJump implements Barrier {
         int i = member.jump();
         boolean memberDoIt = i >= limit;
 
-        System.out.println(memberDoIt + " ");
+        System.out.println(" - " + memberDoIt + " ");
         return memberDoIt;
     }
 

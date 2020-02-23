@@ -4,16 +4,13 @@ import java.util.Random;
 
 public class Robot implements Member {
 
-    public static final int MAX_RUN = 50000;
-    public static final int MAX_JUMP = 50;
-
+    private String name;
     private int personalRunRecord;
     private int personalJumpRecord;
-    public String name;
+    private boolean lose = false;
 
-    public Robot(String name) {
+    public Robot(String name, int MAX_RUN, int MAX_JUMP) {
         this.name = name + " Noob Saibot";
-        System.out.println(name);
 
         Random random = new Random();
         personalRunRecord = random.nextInt(MAX_RUN);
@@ -21,14 +18,29 @@ public class Robot implements Member {
     }
 
     @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public boolean getLose() {
+        return lose;
+    }
+
+    @Override
+    public void setLose() {
+        lose = true;
+    }
+
+    @Override
     public int run() {
-        System.out.println(name + " can run " + personalRunRecord);
+        System.out.print(name + " can run " + personalRunRecord);
         return personalRunRecord;
     }
 
     @Override
     public int jump() {
-        System.out.println(name + " can jump " + personalJumpRecord);
+        System.out.print(name + " can jump " + personalJumpRecord);
         return personalJumpRecord;
     }
 }

@@ -11,5 +11,6 @@ public class Lesson1 {
         stage1.createMember(3, MAX_BARRIER_WIDTH, MAX_BARRIER_HEIGHT);
         stage1.createBarrier(2, MAX_BARRIER_WIDTH, MAX_BARRIER_HEIGHT);
         stage1.checkWin();
+        stage1.printWin();
     }
 }

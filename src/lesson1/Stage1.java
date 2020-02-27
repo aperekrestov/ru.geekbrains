@@ -45,6 +45,19 @@ public class Stage1 {
             System.out.println("Limit is " + barriers[i].getLimit());
 
             checkLooserStep(i);
+
+            int countLooser = 0;
+            for (int j = 0; j < members.size(); j++) {
+                if (members.get(j).getLose()) {
+                    countLooser ++;
+                }
+            }
+
+            if (countLooser == members.size()) {
+                System.out.println("return");
+                return;
+
+            }
         }
     }
 

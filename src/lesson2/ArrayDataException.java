@@ -10,8 +10,16 @@ public class ArrayDataException extends RuntimeException {
     }
 
     public void arraySize() {
-        if (testArray.length != 4 || testArray[0].length != 4) {
+        if (testArray.length != 4) {
             throw new ArrayIndexOutOfBoundsException("MyArraySizeException");
+        }
+
+        for (int i = 0; i < testArray.length; i++) {
+            for (int j = 0; j < testArray[i].length; j++) {
+                if (testArray[i].length != 4) {
+                    throw new ArrayIndexOutOfBoundsException("MyArraySizeException [" + i + "][" + j + "]");
+                }
+            }
         }
 
     }

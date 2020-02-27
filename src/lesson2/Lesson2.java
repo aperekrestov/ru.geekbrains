@@ -4,7 +4,7 @@ public class Lesson2 {
 
     public static void main(String[] args) {
 
-        GeneratorArray testArray = new GeneratorArray(4, 4, true);
+        GeneratorArray testArray = new GeneratorArray(4, 4, false);
         testArray.getInfo();
 
         ArrayDataException letCheck = new ArrayDataException(testArray.getArray());

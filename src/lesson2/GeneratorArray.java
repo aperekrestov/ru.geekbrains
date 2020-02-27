@@ -6,10 +6,6 @@ public class GeneratorArray {
     private int column;
 
     public GeneratorArray(int line, int column, boolean multiTypeArray) {
-        if (line != 4 || column != 4) {
-            // TODO: 25.02.2020 перенести в отдельный класс проверку 
-            System.out.println("throw exception");
-        }
         this.line = line;
         this.column = column;
 
@@ -63,5 +59,9 @@ public class GeneratorArray {
 
     public void getInfo() {
         printArr(testArray);
+    }
+
+    public String[][] getArray() {
+        return testArray;
     }
 }

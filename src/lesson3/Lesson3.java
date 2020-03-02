@@ -2,7 +2,6 @@ package lesson3;
 
 public class Lesson3 {
     public static void main(String[] args) {
-
         System.out.println("Массив слов:");
 
         WordsArray wordsArray = new WordsArray();
@@ -20,5 +19,6 @@ public class Lesson3 {
 
         contacts.getInfo();
         contacts.getNumber("Петров");
+
     }
 }

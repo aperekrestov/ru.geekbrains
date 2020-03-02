@@ -53,6 +53,7 @@ public class Stage1 {
                 }
             }
 
+            // TODO: 23.02.2020 Аочему-то не работает на втором цикле 
             if (winCounter == 0) {
                 System.out.println("\nAfter " + barriers[i].getName() + " we have no winners");
                 return;

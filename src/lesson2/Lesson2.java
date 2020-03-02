@@ -4,11 +4,12 @@ package lesson2;
 import static java.lang.Integer.parseInt;
 
 public class Lesson2 {
+    private static final int ARRAY_SIZE= 4;
     private static CreateArray testArray;
 
     public static void main(String[] args) {
 
-        testArray = new CreateArray(4, 4, true);
+        testArray = new CreateArray(4, 4, false);
         testArray.getInfo();
 
         checkArraySize();
@@ -18,14 +19,14 @@ public class Lesson2 {
     }
 
     private static void checkArraySize() {
-        if (testArray.getArray().length != 4) {
-            throw new ArrayIndexOutOfBoundsException("MyArraySizeException");
+        if (testArray.getArray().length != ARRAY_SIZE) {
+            throw new MyArraySizeException();
         }
 
         for (int i = 0; i < testArray.getArray().length; i++) {
             for (int j = 0; j < testArray.getArray()[i].length; j++) {
-                if (testArray.getArray()[i].length != 4) {
-                    throw new ArrayIndexOutOfBoundsException("MyArraySizeException [" + i + "][" + j + "]");
+                if (testArray.getArray()[i].length != ARRAY_SIZE) {
+                    throw new MyArraySizeException();
                 }
             }
         }
@@ -39,9 +40,11 @@ public class Lesson2 {
                 try {
                     counter += parseInt(testArray.getArray()[i][j]);
                 } catch (NumberFormatException e) {
-                    throw new NumberFormatException("MyArrayDataException [" + i + "][" + j +"]");
+                    throw new MyArrayDataException(testArray.getArray()[i][j], i, j );
                 }
             }
         }
+
+        System.out.println("Сумма чисел равна " + counter);
     }
 }

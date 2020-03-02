@@ -10,6 +10,7 @@ public class Stage1 {
     public Stage1() {}
 
     public void createMember(int memberCounter, int maxRun, int maxJump) {
+
         for (int i = 0; i < memberCounter; i++) {
             if (i % 2 == 0) {
                 Human myHuman = new Human("Human " + i, maxRun, maxJump);
@@ -40,31 +41,57 @@ public class Stage1 {
 
         for (int i = 0; i < barriers.length; i++) {
 
-            int winCounter = 0;
-
             System.out.print("\n" + barriers[i].getName() + " start! ");
             System.out.println("Limit is " + barriers[i].getLimit());
 
+            checkLooserStep(i);
+
+            int countLooser = 0;
             for (int j = 0; j < members.size(); j++) {
-                if (!members.get(j).getLose() && !barriers[i].doIt(members.get(j))) {
-                    members.get(j).setLose();
-                } else {
-                    winCounter ++;
+                if (members.get(j).getLose()) {
+                    countLooser ++;
                 }
             }
 
-            // TODO: 23.02.2020 Аочему-то не работает на втором цикле 
-            if (winCounter == 0) {
-                System.out.println("\nAfter " + barriers[i].getName() + " we have no winners");
+            if (countLooser == members.size()) {
+                System.out.println("return");
                 return;
+
+            }
+        }
+    }
+
+    private void checkLooserStep(int barrierIndex) {
+
+        for (int i = 0; i < members.size(); i++) {
+            if (!members.get(i).getLose()) {
+                if (!barriers[barrierIndex].doIt(members.get(i))) {
+                    members.get(i).setLose();
+                }
+            }
+        }
+    }
+
+    public void printWin() {
+        int countLooser = 0;
+        for (int i = 0; i < members.size(); i++) {
+            if (members.get(i).getLose()) {
+                countLooser ++;
             }
         }
 
-        System.out.println("\nWinners:");
-        for (int j = 0; j < members.size(); j++) {
-            if (!members.get(j).getLose()) {
-                System.out.println(members.get(j).getName());
+        if (countLooser == members.size()) {
+            System.out.println("\nNo winners");
+
+        } else {
+            System.out.println("\nWinners:");
+
+            for (int j = 0; j < members.size(); j++) {
+                if (!members.get(j).getLose()) {
+                    System.out.println(members.get(j).getName());
+                }
             }
         }
+
     }
 }

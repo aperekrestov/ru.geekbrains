@@ -42,6 +42,7 @@ public class EchoClient extends JFrame {
                 try {
                     while (true) {
                         String strFromServer = in.readUTF();
+                        System.out.println(strFromServer);
                         if (strFromServer.equalsIgnoreCase("/end")) {
                             break;
                         }
@@ -54,8 +55,6 @@ public class EchoClient extends JFrame {
             }
         }).start();
     }
-
-
 
     public void closeConnection() {
         try {
@@ -71,19 +70,10 @@ public class EchoClient extends JFrame {
                 out.writeUTF(msgInputField.getText());
                 msgInputField.setText("");
                 msgInputField.grabFocus();
-                getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Ошибка отправки сообщения");
             }
-        }
-    }
-
-    private void getMessage(){
-        try {
-            String messageFromServer = in.readUTF((DataInput) socket.getInputStream());
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 

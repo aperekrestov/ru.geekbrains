@@ -25,7 +25,11 @@ public class TestForm2 {
         btnSend.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listModel.addElement(textField1.getText());
+                String message = textField1.getText().trim();
+                if (message.isEmpty()) {
+                    return;
+                }
+                listModel.addElement(message);
                 textField1.setText("");
             }
         });
@@ -33,15 +37,21 @@ public class TestForm2 {
         textField1.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                listModel.addElement(textField1.getText());
+                String message = textField1.getText().trim();
+                if (message.isEmpty()) {
+                    return;
+                }
+                listModel.addElement(message);
                 textField1.setText("");
             }
         });
     }
     public static void main(String[] args) {
         JFrame frame = new JFrame("Testing form");
-        frame.setContentPane(new TestForm2().panel1);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setLocationRelativeTo(null);
+        frame.setSize(640, 480);
+        frame.setContentPane(new TestForm2().panel1);
 
         frame.pack();
         frame.setVisible(true);

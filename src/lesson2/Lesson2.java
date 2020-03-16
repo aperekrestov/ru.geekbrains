@@ -8,11 +8,20 @@ public class Lesson2 {
 
     public static void main(String[] args) {
 
-        testArray = new CreateArray(4, 4, false);
+        testArray = new CreateArray(4, 4, true);
         testArray.getInfo();
 
-        checkArraySize();
-        checkArrayData();
+        try {
+            checkArraySize();
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
+
+        try {
+            checkArrayData();
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+        }
 
         System.out.println("\nFinish");
     }

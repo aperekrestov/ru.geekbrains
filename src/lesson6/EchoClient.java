@@ -2,22 +2,18 @@ package lesson6;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataInput;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 
 public class EchoClient extends JFrame {
-    private final String SERVER_ADDR = "localhost";
-    private final int SERVER_PORT = 8188;
 
     private JTextField msgInputField;
     private JTextArea chatArea;
-
     private Socket socket;
     private DataInputStream in;
     private DataOutputStream out;
@@ -32,7 +28,10 @@ public class EchoClient extends JFrame {
         prepareGUI();
     }
 
-    public void openConnection() throws IOException {
+    private void openConnection() throws IOException {
+        String SERVER_ADDR = "localhost";
+        int SERVER_PORT = 8188;
+
         socket = new Socket(SERVER_ADDR, SERVER_PORT);
         in = new DataInputStream(socket.getInputStream());
         out = new DataOutputStream(socket.getOutputStream());
@@ -56,6 +55,8 @@ public class EchoClient extends JFrame {
         }).start();
     }
 
+
+
     public void closeConnection() {
         try {
             socket.close();
@@ -64,13 +65,13 @@ public class EchoClient extends JFrame {
         }
     }
 
-    public void sendMessage() {
+    private void sendMessage() {
         if (!msgInputField.getText().trim().isEmpty()) {
             try {
                 out.writeUTF(msgInputField.getText());
-                System.out.println(msgInputField.getText() + " на клиенте отправляем в out.writeUTF");
                 msgInputField.setText("");
                 msgInputField.grabFocus();
+                getMessage();
             } catch (IOException e) {
                 e.printStackTrace();
                 JOptionPane.showMessageDialog(null, "Ошибка отправки сообщения");
@@ -78,7 +79,15 @@ public class EchoClient extends JFrame {
         }
     }
 
-    public void prepareGUI() {
+    private void getMessage(){
+        try {
+            String messageFromServer = in.readUTF((DataInput) socket.getInputStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void prepareGUI() {
         // Параметры окна
         setBounds(600, 300, 500, 500);
         setTitle("Клиент");
@@ -97,18 +106,8 @@ public class EchoClient extends JFrame {
         msgInputField = new JTextField();
         add(bottomPanel, BorderLayout.SOUTH);
         bottomPanel.add(msgInputField, BorderLayout.CENTER);
-        btnSendMsg.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
-        });
-        msgInputField.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                sendMessage();
-            }
-        });
+        btnSendMsg.addActionListener(e -> sendMessage());
+        msgInputField.addActionListener(e -> sendMessage());
 
         // Настраиваем действие на закрытие окна
         addWindowListener(new WindowAdapter() {

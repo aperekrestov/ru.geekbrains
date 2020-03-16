@@ -8,41 +8,53 @@ import java.net.Socket;
 
 public class EchoServer {
 
-    public static final String END_COMMAND = "/end";
+    private static final String END_COMMAND = "/end";
+    private static ServerSocket serverSocket = null;
+    private static Socket clientSocket = null;
 
     public static void main(String[] args) throws IOException {
-
-        Socket clientSocket = null;
-        ServerSocket serverSocket = null;
-
         try {
             serverSocket = new ServerSocket(8188, 1);
             System.out.println("Сервер запущен, ожидаем подключения...");
-            boolean flag = true;
-
-            while (flag) {
-                clientSocket = serverSocket.accept();
-                System.out.println("Клиент подключился");
-            }
-            System.out.println("Программа не выполняет этот код");
-
-            DataInputStream in = new DataInputStream(clientSocket.getInputStream());
-            DataOutputStream out = new DataOutputStream(clientSocket.getOutputStream());
 
             while (true) {
-                System.out.println("Программа не выполняет этот код");
-                String message = in.readUTF();
-                System.out.println("From client: " + message);
-                if (message.equals(END_COMMAND)) {
-                    break;
-                }
-                out.writeUTF("Эхо: " + message);
+                clientSocket = serverSocket.accept();
+                System.out.println("Клиент подключился");
+                newClientListener();
             }
+
         } catch (IOException e) {
             e.printStackTrace();
+
         } finally {
             if (serverSocket != null) serverSocket.close();
             if (clientSocket != null) clientSocket.close();
         }
+    }
+
+    private static void newClientListener() throws IOException {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("Попали в метод ожидания сообщений");
+                    DataInputStream inputStream = new DataInputStream(clientSocket.getInputStream());
+                    DataOutputStream outputStream = new DataOutputStream(clientSocket.getOutputStream());
+
+                    while (true) {
+                        String message = inputStream.readUTF();
+                        System.out.println("Клиент: " + message);
+
+                        if (message.equals(END_COMMAND)) {
+                            System.out.println("На выход");
+                            break;
+                        }
+                        outputStream.writeUTF("Эхо: " + message);
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }).start();
     }
 }

@@ -26,6 +26,7 @@ public class AuthDialog extends JFrame {
 
         buttonCancel.addActionListener(e -> onCancel());
 
+        //todo разобраться почему DO_NOTHING_ON_CLOSE
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent e) {

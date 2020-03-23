@@ -16,36 +16,38 @@ public class ClientHandler {
 
     private final NetworkServer networkServer;
     private final Socket clientSocket;
-
     private ObjectInputStream in;
     private ObjectOutputStream out;
-
     private String nickname;
+    private static final Long TIME_OUT_AUTH = 120000l;// 120 секунд
 
-    private Long timOutAuth = 5000l;
 
     public ClientHandler(NetworkServer networkServer, Socket socket) {
         this.networkServer = networkServer;
         this.clientSocket = socket;
     }
 
-    public void run() {
+    public void run() throws IOException {
         doHandle(clientSocket);
         newTimerToAuth();
     }
 
-    private void newTimerToAuth() {
+    private void newTimerToAuth() throws IOException {
         TimerTask task = new TimerTask() {
             @Override
             public void run() {
-                System.out.println(Thread.currentThread().getName() + " закрываем");
+                Command authTimeOut = Command.authTimeOut("Истекло время аутентификации!");
+                try {
+                    sendMessage(authTimeOut);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
                 closeConnection();
-
             }
         };
 
         Timer timer = new Timer("Authentication timer");
-        timer.schedule(task, timOutAuth);
+        timer.schedule(task, TIME_OUT_AUTH);
     }
 
     private void doHandle(Socket socket) {
@@ -109,7 +111,7 @@ public class ClientHandler {
 
     private Command readCommand() throws IOException {
         try {
-             return (Command) in.readObject();
+            return (Command) in.readObject();
         } catch (ClassNotFoundException e) {
             String errorMessage = "Unknown type of object from client!";
             System.err.println(errorMessage);
@@ -127,7 +129,7 @@ public class ClientHandler {
             }
             if (command.getType() == CommandType.AUTH) {
                 boolean successfulAuth = processAuthCommand(command);
-                if (successfulAuth){
+                if (successfulAuth) {
                     return;
                 }
             } else {
@@ -145,13 +147,11 @@ public class ClientHandler {
             Command authErrorCommand = Command.authErrorCommand("Отсутствует учетная запись по данному логину и паролю!");
             sendMessage(authErrorCommand);
             return false;
-        }
-        else if (networkServer.isNicknameBusy(username)) {
+        } else if (networkServer.isNicknameBusy(username)) {
             Command authErrorCommand = Command.authErrorCommand("Данный пользователь уже авторизован!");
             sendMessage(authErrorCommand);
             return false;
-        }
-        else {
+        } else {
             nickname = username;
             String message = nickname + " зашел в чат!";
             networkServer.broadcastMessage(Command.messageCommand(null, message), this);

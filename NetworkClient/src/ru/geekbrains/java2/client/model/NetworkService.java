@@ -8,6 +8,7 @@ import ru.geekbrains.java2.client.command.UpdateUsersListCommand;
 import ru.geekbrains.java2.client.controller.AuthEvent;
 import ru.geekbrains.java2.client.controller.ClientController;
 import ru.geekbrains.java2.client.controller.MessageHandler;
+import ru.geekbrains.java2.client.view.AuthDialog;
 
 import java.io.*;
 import java.net.Socket;
@@ -26,6 +27,7 @@ public class NetworkService {
     private MessageHandler messageHandler;
     private AuthEvent successfulAuthEvent;
     private String nickname;
+    private AuthDialog authDialog;
 
     public NetworkService(String host, int port) {
         this.host = host;
@@ -65,7 +67,8 @@ public class NetworkService {
                             break;
                         }
                         case AUTH_ERROR:
-                        case ERROR: {
+                        case ERROR:
+                        case AUTH_TIME_OUT_ERROR: {
                             ErrorCommand commandData = (ErrorCommand) command.getData();
                             controller.showErrorMessage(commandData.getErrorMessage());
                             break;

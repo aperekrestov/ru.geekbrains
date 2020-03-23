@@ -3,6 +3,7 @@ package ru.geekbrains.java2.client;
 public enum CommandType {
     AUTH,
     AUTH_ERROR,
+    AUTH_TIME_OUT_ERROR,
     PRIVATE_MESSAGE,
     BROADCAST_MESSAGE,
     MESSAGE,

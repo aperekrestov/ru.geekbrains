@@ -46,7 +46,7 @@ public class NetworkServer {
         }
     }
 
-    private void createClientHandler(Socket clientSocket) {
+    private void createClientHandler(Socket clientSocket) throws IOException {
         ClientHandler clientHandler = new ClientHandler(this, clientSocket);
         clientHandler.run();
     }

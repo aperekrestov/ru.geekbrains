@@ -1,11 +1,9 @@
 package ru.geekbrains.java2.client.controller;
 
-import ru.geekbrains.java2.client.Command;
 import ru.geekbrains.java2.client.view.AuthDialog;
 import ru.geekbrains.java2.client.view.ClientChat;
 import ru.geekbrains.java2.client.model.NetworkService;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.List;
 

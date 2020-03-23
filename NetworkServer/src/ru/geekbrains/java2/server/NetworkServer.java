@@ -36,7 +36,6 @@ public class NetworkServer {
                 System.out.println("Ожидание клиентского подключения...");
                 Socket clientSocket = serverSocket.accept();
                 System.out.println("Клиент подлючился");
-                //todo установить таймер 2 минуты на авторизацию
                 createClientHandler(clientSocket);
             }
         } catch (IOException e) {

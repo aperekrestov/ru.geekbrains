@@ -9,6 +9,8 @@ import ru.geekbrains.java2.server.NetworkServer;
 
 import java.io.*;
 import java.net.Socket;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class ClientHandler {
 
@@ -20,6 +22,8 @@ public class ClientHandler {
 
     private String nickname;
 
+    private Long timOutAuth = 5000l;
+
     public ClientHandler(NetworkServer networkServer, Socket socket) {
         this.networkServer = networkServer;
         this.clientSocket = socket;
@@ -27,6 +31,21 @@ public class ClientHandler {
 
     public void run() {
         doHandle(clientSocket);
+        newTimerToAuth();
+    }
+
+    private void newTimerToAuth() {
+        TimerTask task = new TimerTask() {
+            @Override
+            public void run() {
+                System.out.println(Thread.currentThread().getName() + " закрываем");
+                closeConnection();
+
+            }
+        };
+
+        Timer timer = new Timer("Authentication timer");
+        timer.schedule(task, timOutAuth);
     }
 
     private void doHandle(Socket socket) {
@@ -50,7 +69,7 @@ public class ClientHandler {
         }
     }
 
-    private void closeConnection() {
+    public void closeConnection() {
         try {
             networkServer.unsubscribe(this);
             clientSocket.close();
